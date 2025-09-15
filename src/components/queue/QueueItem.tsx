@@ -39,9 +39,11 @@ export default function Queue() {
   // @ts-ignore
   function onDragEnd(result) {
     // dropped outside the list
+
     if (!result.destination) {
       return;
     }
+    if (result.source.index === 0 || result.destination.index === 0) return;
 
     const items = Array.from(queue);
     const [reorderedItem] = items.splice(result.source.index, 1);
@@ -92,6 +94,21 @@ export default function Queue() {
     });
   }
 
+  const handleDragEnd = (result) => {
+    const { source, destination } = result;
+
+    // dropped outside the list
+    if (!destination) return;
+
+    // prevent moving the first item
+    if (source.index === 0 || destination.index === 0) return;
+
+    const newQueue = Array.from(queue);
+    const [movedItem] = newQueue.splice(source.index, 1);
+    newQueue.splice(destination.index, 0, movedItem);
+
+    setQueue(newQueue);
+  };
   return (
     <>
       <div className="main-queue">
@@ -105,6 +122,7 @@ export default function Queue() {
                       key={item.videoUrl}
                       draggableId={item.videoUrl}
                       index={index}
+                      isDragDisabled={index === 0}
                     >
                       {(provided) => (
                         <li
@@ -136,12 +154,16 @@ export default function Queue() {
                                   <span>{item.artist}</span>
                                 </div>
                               </div>
-                              <div className="icons">
-                                <FontAwesomeIcon
-                                  onClick={(e) => deleteFromQueue(e, index)}
-                                  icon={faTrash}
-                                />
-                              </div>
+
+                              {index !== 0 && (
+                                <div className="icons">
+                                  <FontAwesomeIcon
+                                    onClick={(e) => deleteFromQueue(e, index)}
+                                    icon={faTrash}
+                                  />
+                                  {/* add other icons here if needed */}
+                                </div>
+                              )}
                             </div>
                           </div>
                         </li>
