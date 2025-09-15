@@ -94,21 +94,6 @@ export default function Queue() {
     });
   }
 
-  const handleDragEnd = (result) => {
-    const { source, destination } = result;
-
-    // dropped outside the list
-    if (!destination) return;
-
-    // prevent moving the first item
-    if (source.index === 0 || destination.index === 0) return;
-
-    const newQueue = Array.from(queue);
-    const [movedItem] = newQueue.splice(source.index, 1);
-    newQueue.splice(destination.index, 0, movedItem);
-
-    setQueue(newQueue);
-  };
   return (
     <>
       <div className="main-queue">
