@@ -87,9 +87,9 @@ function App() {
       </div>
       {/* create input to change url on realtime database */}
       {/* <button onClick={handleTest}></button> */}
-      <p className="read-the-docs">
+      {/* <p className="read-the-docs">
         Click on the Vite and React logos to learn more
-      </p>
+      </p> */}
     </>
   );
 }

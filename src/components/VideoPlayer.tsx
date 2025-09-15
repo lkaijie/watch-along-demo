@@ -168,7 +168,7 @@ export default function VideoPlayer() {
   }
   return (
     <div>
-      <button onClick={testFunc}>AKSdnasijdn</button>
+      {/* <button onClick={testFunc}>AKSdnasijdn</button> */}
       <ReactPlayer
         ref={playerRef}
         className="react-player"
